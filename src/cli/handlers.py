@@ -14,16 +14,19 @@ def handle_command(args):
     scan_orchestrator = UrlScanScanOrchestrator(client)
     search_orchestrator = UrlScanSearchOrchestrator(client)
 
-    if args.command == "scan":
+    if args.scan:
         handle_scan(args, scan_orchestrator)
-    elif args.command == "search":
+    elif args.search:
         handle_search(args, search_orchestrator)
     else:
-        raise RuntimeError("Unknown command")
+        raise RuntimeError("No mode selected")
 
 
 
 def handle_scan(args, scan_orchestrator):
+    if not args.url:
+        raise RuntimeError("--url is required for --scan")
+
     result = scan_orchestrator.run(
         url=args.url,
         visibility=args.visibility,

@@ -1,6 +1,7 @@
-#src/cli/parser.py
+# src/cli/parser.py
 
 import argparse
+
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
@@ -13,38 +14,37 @@ def build_parser() -> argparse.ArgumentParser:
         required=True,
         help="urlscan.io API key"
     )
-    
-    subparsers = parser.add_subparsers(
-        dest="command",
-        required=True
-    )
 
-    # ----------------- scan -----------------
-    scan = subparsers.add_parser(
-        "scan",
+    # ---- mode selection ----
+    mode_group = parser.add_mutually_exclusive_group(required=True)
+
+    mode_group.add_argument(
+        "--scan",
+        action="store_true",
         help="Submit a URL to urlscan and wait for result"
     )
 
-    scan.add_argument(
-        "--url",
-        required=True,
-        help="URL to scan"
+    mode_group.add_argument(
+        "--search",
+        action="store_true",
+        help="Search urlscan historical data"
     )
 
-    scan.add_argument(
+    # ---- common / scan args ----
+    parser.add_argument(
+        "--url",
+        help="URL to scan or search"
+    )
+
+    parser.add_argument(
         "--visibility",
         choices=["public", "unlisted", "private"],
         default="public",
         help="Scan visibility (default: public)"
     )
 
-    # ----------------- search -----------------
-    search = subparsers.add_parser(
-        "search",
-        help="Search urlscan historical data"
-    )
-
-    search_group = search.add_mutually_exclusive_group(required=True)
+    # ---- search args ----
+    search_group = parser.add_mutually_exclusive_group()
 
     search_group.add_argument(
         "--domain",
@@ -57,16 +57,11 @@ def build_parser() -> argparse.ArgumentParser:
     )
 
     search_group.add_argument(
-        "--url",
-        help="Search by URL"
-    )
-
-    search_group.add_argument(
         "--hash",
         help="Search by file SHA256 hash"
     )
 
-    search.add_argument(
+    parser.add_argument(
         "--limit",
         type=int,
         help="Limit number of search results"
