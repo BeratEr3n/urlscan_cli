@@ -8,22 +8,22 @@ from core.orchestrator import (
 from core.classifier import TargetType
 
 
-client = APIClient()
-
-scan_orchestrator = UrlScanScanOrchestrator(client)
-search_orchestrator = UrlScanSearchOrchestrator(client)
-
-
 def handle_command(args):
+    client = APIClient(api_key=args.api_key)
+
+    scan_orchestrator = UrlScanScanOrchestrator(client)
+    search_orchestrator = UrlScanSearchOrchestrator(client)
+
     if args.command == "scan":
-        handle_scan(args)
+        handle_scan(args, scan_orchestrator)
     elif args.command == "search":
-        handle_search(args)
+        handle_search(args, search_orchestrator)
     else:
         raise RuntimeError("Unknown command")
 
 
-def handle_scan(args):
+
+def handle_scan(args, scan_orchestrator):
     result = scan_orchestrator.run(
         url=args.url,
         visibility=args.visibility,
@@ -31,7 +31,7 @@ def handle_scan(args):
     print(result)
 
 
-def handle_search(args):
+def handle_search(args, search_orchestrator):
     if args.domain:
         result = search_orchestrator.run_search(
             target=args.domain,

@@ -1,9 +1,6 @@
 #VENV
 venv 
 
-#ENV
-.env
-
 # Python cache
 __pycache__/
 *.pyc

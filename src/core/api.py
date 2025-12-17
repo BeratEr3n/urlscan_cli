@@ -2,7 +2,7 @@
 
 import requests
 from typing import Optional, Dict
-from config.settings import API_KEY, TIMEOUT
+from config.settings import TIMEOUT
 
 
 class APIClient:
@@ -12,9 +12,9 @@ class APIClient:
 
     BASE_URL = "https://urlscan.io/api/v1"
 
-    def __init__(self, api_key: str = API_KEY, timeout: int = TIMEOUT):
+    def __init__(self, api_key: str, timeout: int = TIMEOUT):
         if not api_key:
-            raise ValueError("URLSCAN_API_KEY is not set")
+            raise ValueError("api_key is required")
 
         self.api_key = api_key
         self.timeout = timeout

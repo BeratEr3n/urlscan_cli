@@ -8,6 +8,12 @@ def build_parser() -> argparse.ArgumentParser:
         description="urlscan.io CLI tool"
     )
 
+    parser.add_argument(
+        "--api-key",
+        required=True,
+        help="urlscan.io API key"
+    )
+    
     subparsers = parser.add_subparsers(
         dest="command",
         required=True
