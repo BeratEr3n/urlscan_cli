@@ -32,14 +32,7 @@ def handle_scan(args):
 
 
 def handle_search(args):
-    if args.target:
-        result = search_orchestrator.run_search(
-            target=args.target,
-            target_type=TargetType.TARGET,
-            limit=args.limit,
-        )
-
-    elif args.domain:
+    if args.domain:
         result = search_orchestrator.run_search(
             target=args.domain,
             target_type=TargetType.DOMAIN,

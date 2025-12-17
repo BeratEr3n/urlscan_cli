@@ -41,11 +41,6 @@ def build_parser() -> argparse.ArgumentParser:
     search_group = search.add_mutually_exclusive_group(required=True)
 
     search_group.add_argument(
-        "--target",
-        help="Auto-detect target type (domain, ip, url, hash)"
-    )
-
-    search_group.add_argument(
         "--domain",
         help="Search by domain"
     )

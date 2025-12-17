@@ -57,15 +57,6 @@ class UrlScanSearchOrchestrator:
         limit: int | None = None,
     ) -> dict:
         
-        # auto-detect (--target)
-        if target_type == TargetType.TARGET:
-            detected = self.search.detect_target_type(target)
-            return self.search.search(
-                target=target,
-                target_type=detected,
-                limit=limit,
-            )
-
         # explicit (--domain, --ip, --url, --hash)
         return self.search.search(
             target=target,

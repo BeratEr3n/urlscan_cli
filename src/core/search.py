@@ -2,7 +2,7 @@
 
 from typing import Dict
 from core.api import APIClient
-from core.classifier import TargetClassifier, TargetType
+from core.classifier import TargetType
 from config.settings import SEARCH_RESULT_LIMIT
 
 
@@ -13,13 +13,7 @@ class UrlScanSearchService:
 
     def __init__(self, client: APIClient):
         self.client = client
-        self.classifier = TargetClassifier()
 
-    def detect_target_type(self, target: str) -> TargetType:
-        """
-        --target kullanımı için otomatik tip tespiti.
-        """
-        return self.classifier.classify(target)
 
     def _build_query(self, target: str, target_type: TargetType) -> str:
         """
@@ -51,12 +45,6 @@ class UrlScanSearchService:
         Belirtilen target ve target_type'a göre arama yapar.
         """
         size = limit or SEARCH_RESULT_LIMIT
-
-        if target_type == TargetType.UNKNOWN:
-            return {
-                "status": "unsupported_target",
-                "target": target
-            }
 
         query = self._build_query(target, target_type)
 
