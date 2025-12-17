@@ -7,7 +7,6 @@ from core.api import APIClient
 class UrlScanSubmissionService:
     """
     urlscan.io Scan API üzerinden URL submit işlemini yapan servis.
-    Yalnızca pratikte işe yarayan alanlar desteklenir.
     """
 
     def __init__(self, client: APIClient):

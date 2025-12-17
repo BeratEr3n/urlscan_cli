@@ -8,7 +8,6 @@ from config.settings import API_KEY, TIMEOUT
 class APIClient:
     """
     urlscan.io API ile HTTP haberleşmesini yöneten katman.
-    Sadece GET ve POST yapar, business logic içermez.
     """
 
     BASE_URL = "https://urlscan.io/api/v1"

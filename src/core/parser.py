@@ -12,6 +12,8 @@ class UrlScanResultParser:
         lists = result.get("lists", {})
 
         urlscan_verdict = verdicts.get("urlscan", {})
+        urlscan_verdict = verdicts.get("urlscan", {})
+        overall_verdict = verdicts.get("overall", {})
 
         parsed = {
             "task": {
@@ -31,13 +33,13 @@ class UrlScanResultParser:
                 "title": page.get("title"),
             },
             "verdict": {
+                "malicious": overall_verdict.get("malicious"),
                 "score": urlscan_verdict.get("score"),
                 "categories": urlscan_verdict.get("categories", []),
             },
             "observables": {
                 "domains": lists.get("domains", [])[:20],
                 "ips": lists.get("ips", [])[:20],
-                "urls": lists.get("urls", [])[:20],
                 "hashes": lists.get("hashes", [])[:20],
             },
         }

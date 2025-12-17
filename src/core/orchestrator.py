@@ -36,7 +36,8 @@ class UrlScanScanOrchestrator:
         result = self.poller.wait(scan_id)
 
         # 3. parse
-        return self.parser.parse(result)
+        #return self.parser.parse(result)
+        return result
 
 
 

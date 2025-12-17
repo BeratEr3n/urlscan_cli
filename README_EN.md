@@ -1,10 +1,10 @@
 # urlscan_cli
 
-`urlscan_cli`, **urlscan.io** API’sini kullanarak  
-- URL scan (submit + poll)  
-- domain / ip / url / hash search  
+`urlscan_cli` is a command-line tool that uses the **urlscan.io** API to perform:  
+- URL scanning (submit + poll)  
+- domain / IP / URL / hash searches  
 
-işlemlerini **komut satırından** yapmanı sağlayan bir CLI aracıdır.
+directly from the terminal.
 
 ---
 
@@ -12,26 +12,26 @@ işlemlerini **komut satırından** yapmanı sağlayan bir CLI aracıdır.
 
 - **URL Scan** (submit → poll → parse)
 - Domain / IP (IPv4 & IPv6) / URL / Hash **Search**
-- Otomatik target type tespiti (`--target`)
-- Elasticsearch syntax hatalarına karşı güvenli query üretimi
+- Automatic target type detection (`--target`)
+- Safe query generation against Elasticsearch syntax errors
 
 ---
 
 ## 📦 Installation
 
-### 1. Repo’yu klonla
+### 1. Clone the repository
 ```bash
 git clone https://github.com/BeratEr3n/urlscan_cli.git
 cd urlscan_cli
 ```
 
-### 2. Virtual environment (önerilir)
+### 2. Virtual environment (recommended)
 ```bash
 python -m venv venv
 venv\Scripts\activate
 ```
 
-### 3. Bağımlılıkları yükle
+### 3. Install dependencies
 ```bash
 pip install -r requirements.txt
 ```
@@ -40,12 +40,12 @@ pip install -r requirements.txt
 
 ## 🔑 Configuration
 
-### `.env` dosyası oluştur
+### Create a `.env` file
 ```bash
 copy .env.example .env
 ```
 
-### `.env` içeriği
+### `.env` content
 ```env
 URLSCAN_API_KEY=YOUR_API_KEY_HERE
 ```
@@ -70,7 +70,7 @@ python src/main.py <command> [options]
 python src/main.py scan --url https://example.com
 ```
 
-#### Visibility ayarı
+#### Set visibility
 ```bash
 python src/main.py scan --url https://example.com --visibility unlisted
 ```
@@ -79,7 +79,7 @@ python src/main.py scan --url https://example.com --visibility unlisted
 
 ### 🔹 Search
 
-#### Auto-detect (önerilen)
+#### Auto-detect (recommended)
 ```bash
 python src/main.py search --target example.com
 python src/main.py search --target https://example.com
@@ -87,7 +87,7 @@ python src/main.py search --target 8.8.8.8
 python src/main.py search --target 2606:4700:4700::1111
 ```
 
-> ⚠️ URL içinde `&` gibi karakterler varsa **tırnak kullanın**
+> ⚠️ If the URL contains characters like `&`, **wrap it in quotes**
 ```bash
 python src/main.py search --target "https://example.com/?a=1&b=2"
 ```
@@ -110,12 +110,12 @@ python src/main.py search --ip 2606:4700:4700::1111
 python src/main.py search --url https://example.com
 ```
 
-#### Hash (indirilen dosyalar için)
+#### Hash (downloaded files only)
 ```bash
 python src/main.py search --hash <sha256>
 ```
 
-#### Sonuç limiti
+#### Result limit
 ```bash
 python src/main.py search --target example.com --limit 20
 ```
@@ -124,12 +124,12 @@ python src/main.py search --target example.com --limit 20
 
 ## 🛠 Notes
 
-- urlscan **dosya upload** veya **sandbox** desteği sunmaz  
-- Scan işlemleri yalnızca **URL** için yapılabilir
-- Hash search yalnızca daha önce taranmış sitelerden **indirilen dosyalar** için geçerlidir
-- Search API yoğunluğa bağlı olarak **HTTP 503** dönebilir (geçicidir)
-- Varsayılan search limiti `settings.py` üzerinden ayarlanabilir
-- Parser katmanı isteğe göre sadeleştirilmiş olup ileride genişletilebilir
+- urlscan does **not** support file uploads or sandbox execution  
+- Scan operations are available **only for URLs**
+- Hash search works only for **files downloaded during previous scans**
+- The Search API may temporarily return **HTTP 503** due to high load
+- Default search limit can be configured in `settings.py`
+- The parser layer is intentionally minimal and can be extended later
 
 ---
 
