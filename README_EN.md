@@ -1,138 +1,125 @@
 # urlscan_cli
 
-`urlscan_cli` is a command-line tool that uses the **urlscan.io** API to perform:  
-- URL scanning (submit + poll)  
-- domain / IP / URL / hash searches  
+`urlscan_cli` is a CLI tool that uses the **urlscan.io** API to perform:
 
-directly from the terminal.
+- URL scan (submit + poll)
+- domain / ip / url / hash search
 
----
-
-## 🚀 Features
-
-- **URL Scan** (submit → poll → parse)
-- Domain / IP (IPv4 & IPv6) / URL / Hash **Search**
-- Automatic target type detection (`--target`)
-- Safe query generation against Elasticsearch syntax errors
+from the command line or programmatically (MCP / LLM).
 
 ---
 
-## 📦 Installation
+## Features
 
-### 1. Clone the repository
+- URL Scan (submit → poll)
+- Domain / IP (IPv4 & IPv6) / URL / Hash search
+- Explicit target selection (domain, ip, url, hash)
+- API key required, fail-fast behavior
+
+---
+
+## Installation
+
+### Clone the repository
 ```bash
 git clone https://github.com/BeratEr3n/urlscan_cli.git
 cd urlscan_cli
 ```
 
-### 2. Virtual environment (recommended)
+### Virtual environment (recommended)
 ```bash
 python -m venv venv
 venv\Scripts\activate
 ```
 
-### 3. Install dependencies
+### Install dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
 ---
 
-## 🔑 Configuration
+## Configuration
 
-### Create a `.env` file
-```bash
-copy .env.example .env
-```
+In this project:
+- API key is required as a parameter
 
-### `.env` content
-```env
-URLSCAN_API_KEY=YOUR_API_KEY_HERE
-```
-
-> API key: https://urlscan.io/user/login/
+API key:
+https://urlscan.io/user/login/
 
 ---
 
-## ▶️ Usage
+## Usage
 
 ```bash
-python src/main.py <command> [options]
+python src/main.py --api-key YOUR_API_KEY <command> [options]
 ```
+
+The program will not run without an API key.
 
 ---
 
-## 🧪 Commands
+## Commands
 
-### 🔹 URL Scan
+### URL Scan
 
 ```bash
-python src/main.py scan --url https://example.com
+python src/main.py --api-key YOUR_API_KEY scan --url https://example.com
 ```
 
-#### Set visibility
+Visibility option:
 ```bash
-python src/main.py scan --url https://example.com --visibility unlisted
+python src/main.py --api-key YOUR_API_KEY scan --url https://example.com --visibility unlisted
 ```
 
 ---
 
-### 🔹 Search
-
-#### Auto-detect (recommended)
-```bash
-python src/main.py search --target example.com
-python src/main.py search --target https://example.com
-python src/main.py search --target 8.8.8.8
-python src/main.py search --target 2606:4700:4700::1111
-```
-
-> ⚠️ If the URL contains characters like `&`, **wrap it in quotes**
-```bash
-python src/main.py search --target "https://example.com/?a=1&b=2"
-```
-
----
+### Search
 
 #### Domain
 ```bash
-python src/main.py search --domain example.com
+python src/main.py --api-key YOUR_API_KEY search --domain example.com
 ```
 
 #### IP (IPv4 / IPv6)
 ```bash
-python src/main.py search --ip 1.1.1.1
-python src/main.py search --ip 2606:4700:4700::1111
+python src/main.py --api-key YOUR_API_KEY search --ip 1.1.1.1
+python src/main.py --api-key YOUR_API_KEY search --ip 2606:4700:4700::1111
 ```
 
 #### URL
 ```bash
-python src/main.py search --url https://example.com
+python src/main.py --api-key YOUR_API_KEY search --url https://example.com
 ```
 
-#### Hash (downloaded files only)
+If the URL contains characters like `&`, use quotes:
 ```bash
-python src/main.py search --hash <sha256>
+python src/main.py --api-key YOUR_API_KEY search --url "https://example.com/?a=1&b=2"
+```
+
+#### Hash (for downloaded files)
+```bash
+python src/main.py --api-key YOUR_API_KEY search --hash <sha256>
 ```
 
 #### Result limit
 ```bash
-python src/main.py search --target example.com --limit 20
+python src/main.py --api-key YOUR_API_KEY search --domain example.com --limit 20
 ```
 
 ---
 
-## 🛠 Notes
+## Notes
 
-- urlscan does **not** support file uploads or sandbox execution  
-- Scan operations are available **only for URLs**
-- Hash search works only for **files downloaded during previous scans**
-- The Search API may temporarily return **HTTP 503** due to high load
-- Default search limit can be configured in `settings.py`
-- The parser layer is intentionally minimal and can be extended later
+- urlscan does not provide file upload or sandbox support
+- Scan operations are only available for URLs
+- Hash search is only valid for files downloaded from previously scanned sites
+- Search API may temporarily return HTTP 503 depending on load
+- Default search limit is configured in `config/settings.py`
+- The tool is suitable for MCP / LLM integration; human CLI UX is not the priority
 
 ---
 
-## 📄 License
+## License
 
 MIT

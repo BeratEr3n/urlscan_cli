@@ -1,138 +1,125 @@
 # urlscan_cli
 
-`urlscan_cli`, **urlscan.io** API’sini kullanarak  
-- URL scan (submit + poll)  
-- domain / ip / url / hash search  
+`urlscan_cli`, **urlscan.io** API’sini kullanarak
 
-işlemlerini **komut satırından** yapmanı sağlayan bir CLI aracıdır.
+- URL scan (submit + poll)
+- domain / ip / url / hash search
 
----
-
-## 🚀 Features
-
-- **URL Scan** (submit → poll → parse)
-- Domain / IP (IPv4 & IPv6) / URL / Hash **Search**
-- Otomatik target type tespiti (`--target`)
-- Elasticsearch syntax hatalarına karşı güvenli query üretimi
+işlemlerini komut satırından veya programatik olarak (MCP / LLM) yapmanı sağlayan bir CLI araçtır.
 
 ---
 
-## 📦 Installation
+## Features
 
-### 1. Repo’yu klonla
+- URL Scan (submit → poll)
+- Domain / IP (IPv4 & IPv6) / URL / Hash search
+- Explicit target selection (domain, ip, url, hash)
+- API key zorunlu, fail-fast davranış
+
+---
+
+## Installation
+
+### Repo’yu klonla
 ```bash
 git clone https://github.com/BeratEr3n/urlscan_cli.git
 cd urlscan_cli
 ```
 
-### 2. Virtual environment (önerilir)
+### Virtual environment (önerilir)
 ```bash
 python -m venv venv
 venv\Scripts\activate
 ```
 
-### 3. Bağımlılıkları yükle
+### Bağımlılıkları yükle
 ```bash
 pip install -r requirements.txt
 ```
 
 ---
 
-## 🔑 Configuration
+## Configuration
 
-### `.env` dosyası oluştur
-```bash
-copy .env.example .env
-```
+Bu projede:
+- API key parametre olarak zorunludur
 
-### `.env` içeriği
-```env
-URLSCAN_API_KEY=YOUR_API_KEY_HERE
-```
-
-> API key: https://urlscan.io/user/login/
+API key:
+https://urlscan.io/user/login/
 
 ---
 
-## ▶️ Usage
+## Usage
 
 ```bash
-python src/main.py <command> [options]
+python src/main.py --api-key YOUR_API_KEY <command> [options]
 ```
+
+API key verilmezse program çalışmaz.
 
 ---
 
-## 🧪 Commands
+## Commands
 
-### 🔹 URL Scan
+### URL Scan
 
 ```bash
-python src/main.py scan --url https://example.com
+python src/main.py --api-key YOUR_API_KEY scan --url https://example.com
 ```
 
-#### Visibility ayarı
+Visibility ayarı:
 ```bash
-python src/main.py scan --url https://example.com --visibility unlisted
+python src/main.py --api-key YOUR_API_KEY scan --url https://example.com --visibility unlisted
 ```
 
 ---
 
-### 🔹 Search
-
-#### Auto-detect (önerilen)
-```bash
-python src/main.py search --target example.com
-python src/main.py search --target https://example.com
-python src/main.py search --target 8.8.8.8
-python src/main.py search --target 2606:4700:4700::1111
-```
-
-> ⚠️ URL içinde `&` gibi karakterler varsa **tırnak kullanın**
-```bash
-python src/main.py search --target "https://example.com/?a=1&b=2"
-```
-
----
+### Search
 
 #### Domain
 ```bash
-python src/main.py search --domain example.com
+python src/main.py --api-key YOUR_API_KEY search --domain example.com
 ```
 
 #### IP (IPv4 / IPv6)
 ```bash
-python src/main.py search --ip 1.1.1.1
-python src/main.py search --ip 2606:4700:4700::1111
+python src/main.py --api-key YOUR_API_KEY search --ip 1.1.1.1
+python src/main.py --api-key YOUR_API_KEY search --ip 2606:4700:4700::1111
 ```
 
 #### URL
 ```bash
-python src/main.py search --url https://example.com
+python src/main.py --api-key YOUR_API_KEY search --url https://example.com
+```
+
+URL içinde `&` gibi karakterler varsa tırnak kullanın:
+```bash
+python src/main.py --api-key YOUR_API_KEY search --url "https://example.com/?a=1&b=2"
 ```
 
 #### Hash (indirilen dosyalar için)
 ```bash
-python src/main.py search --hash <sha256>
+python src/main.py --api-key YOUR_API_KEY search --hash <sha256>
 ```
 
 #### Sonuç limiti
 ```bash
-python src/main.py search --target example.com --limit 20
+python src/main.py --api-key YOUR_API_KEY search --domain example.com --limit 20
 ```
 
 ---
 
-## 🛠 Notes
+## Notes
 
-- urlscan **dosya upload** veya **sandbox** desteği sunmaz  
-- Scan işlemleri yalnızca **URL** için yapılabilir
-- Hash search yalnızca daha önce taranmış sitelerden **indirilen dosyalar** için geçerlidir
-- Search API yoğunluğa bağlı olarak **HTTP 503** dönebilir (geçicidir)
-- Varsayılan search limiti `settings.py` üzerinden ayarlanabilir
-- Parser katmanı isteğe göre sadeleştirilmiş olup ileride genişletilebilir
+- urlscan dosya upload veya sandbox desteği sunmaz
+- Scan işlemleri yalnızca URL için yapılabilir
+- Hash search yalnızca daha önce taranmış sitelerden indirilen dosyalar için geçerlidir
+- Search API yoğunluğa bağlı olarak geçici HTTP 503 dönebilir
+- Varsayılan search limiti `config/settings.py` üzerinden ayarlanır
+- Tool MCP / LLM entegrasyonu için uygundur, insan CLI deneyimi öncelik değildir
 
 ---
 
-## 📄 License
+## License
 
 MIT
