@@ -64,12 +64,12 @@ API key verilmezse program çalışmaz.
 ### URL Scan
 
 ```bash
-python src/main.py --api-key YOUR_API_KEY scan --url https://example.com
+python src/main.py --api-key YOUR_API_KEY --scan --url https://example.com
 ```
 
 Visibility ayarı:
 ```bash
-python src/main.py --api-key YOUR_API_KEY scan --url https://example.com --visibility unlisted
+python src/main.py --api-key YOUR_API_KEY --scan --url https://example.com --visibility unlisted
 ```
 
 ---
@@ -78,33 +78,33 @@ python src/main.py --api-key YOUR_API_KEY scan --url https://example.com --visib
 
 #### Domain
 ```bash
-python src/main.py --api-key YOUR_API_KEY search --domain example.com
+python src/main.py --api-key YOUR_API_KEY --search --domain example.com
 ```
 
 #### IP (IPv4 / IPv6)
 ```bash
-python src/main.py --api-key YOUR_API_KEY search --ip 1.1.1.1
-python src/main.py --api-key YOUR_API_KEY search --ip 2606:4700:4700::1111
+python src/main.py --api-key YOUR_API_KEY --search --ip 1.1.1.1
+python src/main.py --api-key YOUR_API_KEY --search --ip 2606:4700:4700::1111
 ```
 
 #### URL
 ```bash
-python src/main.py --api-key YOUR_API_KEY search --url https://example.com
+python src/main.py --api-key YOUR_API_KEY --search --url https://example.com
 ```
 
 URL içinde `&` gibi karakterler varsa tırnak kullanın:
 ```bash
-python src/main.py --api-key YOUR_API_KEY search --url "https://example.com/?a=1&b=2"
+python src/main.py --api-key YOUR_API_KEY --search --url "https://example.com/?a=1&b=2"
 ```
 
 #### Hash (indirilen dosyalar için)
 ```bash
-python src/main.py --api-key YOUR_API_KEY search --hash <sha256>
+python src/main.py --api-key YOUR_API_KEY --search --hash <sha256>
 ```
 
 #### Sonuç limiti
 ```bash
-python src/main.py --api-key YOUR_API_KEY search --domain example.com --limit 20
+python src/main.py --api-key YOUR_API_KEY --search --domain example.com --limit 20
 ```
 
 ---

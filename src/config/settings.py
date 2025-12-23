@@ -1,6 +1,6 @@
 # urlscan_cli/config/settings.py
 
-SEARCH_RESULT_LIMIT = int(20)
+SEARCH_RESULT_LIMIT = int(5)
 
 # Timeout
 TIMEOUT = int(60)
