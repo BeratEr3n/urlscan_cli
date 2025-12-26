@@ -43,5 +43,21 @@ class UrlScanResultParser:
                 "hashes": lists.get("hashes", [])[:20],
             },
         }
+        import json
+        json_output = json.dumps(parsed, indent=2, ensure_ascii=False)
 
-        return parsed
+
+        return json_output
+    
+class UrlScanSearchParser:
+
+    def parse(self, result: dict):
+        
+        # TODO parse edilebilir
+        parsed =  result
+
+        import json
+        json_output = json.dumps(parsed, indent=2, ensure_ascii=False)
+
+
+        return json_output

@@ -2,7 +2,7 @@
 
 from core.submission import UrlScanSubmissionService
 from core.poller import UrlScanPoller
-from core.parser import UrlScanResultParser
+from core.parser import UrlScanResultParser, UrlScanSearchParser
 from core.search import UrlScanSearchService
 from core.classifier import TargetType
 
@@ -36,8 +36,7 @@ class UrlScanScanOrchestrator:
         result = self.poller.wait(scan_id)
 
         # 3. parse
-        #return self.parser.parse(result)
-        return result
+        return self.parser.parse(result)
 
 
 
@@ -49,6 +48,7 @@ class UrlScanSearchOrchestrator:
 
     def __init__(self, client):
         self.search = UrlScanSearchService(client)
+        self.parser = UrlScanSearchParser()
 
     def run_search(
         self,
@@ -58,8 +58,10 @@ class UrlScanSearchOrchestrator:
     ) -> dict:
         
         # explicit (--domain, --ip, --url, --hash)
-        return self.search.search(
+        search_result = self.search.search(
             target=target,
             target_type=target_type,
             limit=limit,
         )
+
+        return self.parser.parse(search_result)
